@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     if (inView) {
       const timeout = setTimeout(() => {
-        setLocation("/products");
+        setLocation("/about");
       }, 800);
       return () => clearTimeout(timeout);
     }

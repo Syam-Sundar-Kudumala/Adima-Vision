@@ -1,7 +1,25 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { useInView } from "react-intersection-observer";
+import { useLocation } from "wouter";
+import { useEffect } from "react";
 
 export default function About() {
+  const [, setLocation] = useLocation();
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      const timeout = setTimeout(() => {
+        setLocation("/products");
+      }, 800);
+      return () => clearTimeout(timeout);
+    }
+  }, [inView, setLocation]);
+
   return (
     <div className="min-h-screen flex flex-col bg-background font-sans">
       <Navigation />
@@ -72,7 +90,7 @@ export default function About() {
         </section>
 
         {/* Location / T-Hub */}
-        <section className="py-20 px-4">
+        <section ref={ref} className="py-20 px-4 bg-white">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-3xl font-display font-bold mb-8">Incubated at T-Hub</h2>
             <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -86,6 +104,7 @@ export default function About() {
                 className="w-full h-64 md:h-96 object-cover"
               />
             </div>
+            <p className="text-primary font-medium animate-bounce mt-12">Scroll more to see our products</p>
           </div>
         </section>
       </main>
