@@ -1,12 +1,47 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { Link } from "wouter";
+import { ArrowRight } from "lucide-react";
+import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
+import { ProductCard } from "@/components/ProductCard";
 
 export default function Home() {
+  const [, setLocation] = useLocation();
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      const timeout = setTimeout(() => {
+        setLocation("/products");
+      }, 800);
+      return () => clearTimeout(timeout);
+    }
+  }, [inView, setLocation]);
+
+  const productsPreview = [
+    {
+      title: "EkPage",
+      description: "India's own multi-feature social media platform.",
+      status: "Beta" as const,
+      url: "https://www.ekpage.com",
+      color: "from-blue-500 to-indigo-600"
+    },
+    {
+      title: "2True",
+      description: "India's first physically verified matrimonial platform.",
+      status: "Development" as const,
+      url: "https://www.2true.in",
+      color: "from-rose-500 to-pink-600"
+    }
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-background font-sans">
       <Navigation />
       
       <main className="flex-grow">
@@ -62,11 +97,8 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="lg:w-1/2 relative"
               >
-                {/* Abstract geometric composition representing innovation */}
                 <div className="relative w-full aspect-square max-w-[500px] mx-auto">
                   <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-full blur-3xl animate-pulse" />
-                  
-                  {/* Floating cards simulation */}
                   <div className="relative z-10 grid grid-cols-2 gap-4 p-6 glass-card rounded-3xl rotate-3 hover:rotate-0 transition-transform duration-700">
                      <div className="col-span-2 h-32 rounded-2xl bg-gradient-to-r from-slate-100 to-slate-200 animate-pulse" />
                      <div className="h-32 rounded-2xl bg-primary/10" />
@@ -76,8 +108,6 @@ export default function Home() {
                         <div className="h-4 w-1/2 bg-slate-200 rounded" />
                      </div>
                   </div>
-                  
-                  {/* Decorative elements */}
                   <div className="absolute -top-10 -right-10 w-24 h-24 bg-accent/20 rounded-full blur-xl" />
                   <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/20 rounded-full blur-xl" />
                 </div>
@@ -122,19 +152,16 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Call to Action */}
-        <section className="py-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-primary/5 -skew-y-3 transform origin-top-left scale-110" />
-          <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Ready to shape the future?</h2>
-            <p className="text-xl text-muted-foreground mb-10">
-              Join us as a collaborator, partner, or investor in our journey of innovation.
-            </p>
-            <Link href="/contact">
-              <button className="px-10 py-4 rounded-full bg-primary text-white font-bold text-lg shadow-xl shadow-primary/30 hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                Let's Talk Business
-              </button>
-            </Link>
+        {/* Scroll Trigger for Products */}
+        <section ref={ref} className="py-24 relative overflow-hidden bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+             <h2 className="text-3xl font-display font-bold mb-8">Our Innovations</h2>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12 opacity-50 grayscale scale-95 transition-all duration-700">
+                {productsPreview.map((product, i) => (
+                  <ProductCard key={i} index={i} {...product} />
+                ))}
+             </div>
+             <p className="text-primary font-medium animate-bounce">Scroll more to explore our ecosystem</p>
           </div>
         </section>
       </main>
