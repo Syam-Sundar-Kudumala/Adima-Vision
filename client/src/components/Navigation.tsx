@@ -55,8 +55,8 @@ export function Navigation() {
             <a href="#contact">
               <button className="px-5 py-2.5 rounded-full bg-foreground text-background font-medium text-sm hover:bg-primary hover:text-white transition-all duration-300 shadow-lg hover:shadow-primary/25 transform hover:-translate-y-0.5">
                 Get in Touch
-              </a>
-            </a >
+              </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
