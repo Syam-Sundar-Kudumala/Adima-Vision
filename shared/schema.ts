@@ -1,15 +1,11 @@
-import { pgTable, text, serial } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const inquiries = pgTable("inquiries", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  message: text("message").notNull(),
+// Simplified schema without Drizzle/DB dependencies
+export const insertInquirySchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(1, "Message is required"),
 });
 
-export const insertInquirySchema = createInsertSchema(inquiries).omit({ id: true });
-
 export type InsertInquiry = z.infer<typeof insertInquirySchema>;
-export type Inquiry = typeof inquiries.$inferSelect;
+export type Inquiry = InsertInquiry & { id: number };

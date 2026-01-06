@@ -1,4 +1,4 @@
-import { inquiries, type Inquiry, type InsertInquiry } from "@shared/schema";
+import { type Inquiry, type InsertInquiry } from "@shared/schema";
 
 export interface IStorage {
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
