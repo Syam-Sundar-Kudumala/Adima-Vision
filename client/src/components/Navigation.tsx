@@ -14,13 +14,13 @@ export function Navigation() {
   }, []);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/products", label: "Products" },
-    { href: "/contact", label: "Contact" },
+    { href: "#home", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#products", label: "Products" },
+    { href: "#contact", label: "Contact" },
   ];
 
-  const isActive = (path: string) => location === path;
+  const isActive = (path: string) => false;
 
   return (
     <nav
@@ -30,19 +30,19 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2 group">
+          <a href="#home" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-display font-bold text-xl shadow-lg shadow-primary/25 group-hover:scale-105 transition-transform duration-300">
               A
             </div>
             <span className={`font-display font-bold text-xl tracking-tight transition-colors ${scrolled ? "text-foreground" : "text-foreground"}`}>
               Adima<span className="text-primary">Tech</span>
             </span>
-          </Link>
+          </a>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
                 className={`text-sm font-medium transition-colors hover:text-primary relative py-1 ${
@@ -50,16 +50,13 @@ export function Navigation() {
                 }`}
               >
                 {link.label}
-                {isActive(link.href) && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full" />
-                )}
-              </Link>
+              </a>
             ))}
-            <Link href="/contact">
+            <a href="#contact">
               <button className="px-5 py-2.5 rounded-full bg-foreground text-background font-medium text-sm hover:bg-primary hover:text-white transition-all duration-300 shadow-lg hover:shadow-primary/25 transform hover:-translate-y-0.5">
                 Get in Touch
-              </button>
-            </Link>
+              </a>
+            </a >
           </div>
 
           {/* Mobile Menu Button */}
@@ -78,7 +75,7 @@ export function Navigation() {
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-xl p-4 flex flex-col gap-4 animate-in slide-in-from-top-5">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
               className={`text-lg font-medium p-2 rounded-lg transition-colors ${
@@ -87,13 +84,13 @@ export function Navigation() {
               onClick={() => setIsOpen(false)}
             >
               {link.label}
-            </Link>
+            </a>
           ))}
-          <Link href="/contact" onClick={() => setIsOpen(false)}>
+          <a href="#contact" onClick={() => setIsOpen(false)}>
             <button className="w-full mt-2 px-5 py-3 rounded-lg bg-primary text-white font-medium shadow-md">
               Get in Touch
             </button>
-          </Link>
+          </a>
         </div>
       )}
     </nav>
