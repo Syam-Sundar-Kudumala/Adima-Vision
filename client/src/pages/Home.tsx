@@ -1,45 +1,10 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ArrowRight } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
-import { ProductCard } from "@/components/ProductCard";
 
 export default function Home() {
-  const [, setLocation] = useLocation();
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: false,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      const timeout = setTimeout(() => {
-        setLocation("/about");
-      }, 800);
-      return () => clearTimeout(timeout);
-    }
-  }, [inView, setLocation]);
-
-  const productsPreview = [
-    {
-      title: "EkPage",
-      description: "India's own multi-feature social media platform.",
-      status: "Beta" as const,
-      url: "https://www.ekpage.com",
-      color: "from-blue-500 to-indigo-600"
-    },
-    {
-      title: "2True",
-      description: "India's first physically verified matrimonial platform.",
-      status: "Development" as const,
-      url: "https://www.2true.in",
-      color: "from-rose-500 to-pink-600"
-    }
-  ];
-
   return (
     <div className="min-h-screen flex flex-col bg-background font-sans">
       <Navigation />
@@ -149,19 +114,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Scroll Trigger for Products */}
-        <section ref={ref} className="py-24 relative overflow-hidden bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-             <h2 className="text-3xl font-display font-bold mb-8">Our Innovations</h2>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12 opacity-50 grayscale scale-95 transition-all duration-700">
-                {productsPreview.map((product, i) => (
-                  <ProductCard key={i} index={i} {...product} />
-                ))}
-             </div>
-             <p className="text-primary font-medium animate-bounce">Scroll more to explore our ecosystem</p>
           </div>
         </section>
       </main>

@@ -1,26 +1,8 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
-import { useInView } from "react-intersection-observer";
-import { useLocation } from "wouter";
-import { useEffect } from "react";
 
 export default function Products() {
-  const [, setLocation] = useLocation();
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: false,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      const timeout = setTimeout(() => {
-        setLocation("/contact");
-      }, 800);
-      return () => clearTimeout(timeout);
-    }
-  }, [inView, setLocation]);
-
   const products = [
     {
       title: "EkPage",
@@ -85,7 +67,7 @@ export default function Products() {
             ))}
             
             {/* Call to action card */}
-            <div ref={ref} className="bg-gradient-to-br from-primary to-accent rounded-3xl p-8 text-white flex flex-col justify-center items-center text-center shadow-lg transform transition-transform hover:-translate-y-1">
+            <div className="bg-gradient-to-br from-primary to-accent rounded-3xl p-8 text-white flex flex-col justify-center items-center text-center shadow-lg transform transition-transform hover:-translate-y-1">
               <h3 className="text-2xl font-bold font-display mb-4">Have an Idea?</h3>
               <p className="mb-8 text-white/90">
                 We are always looking for the next big problem to solve. Partner with us to bring your vision to life.

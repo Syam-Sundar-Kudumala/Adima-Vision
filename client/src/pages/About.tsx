@@ -1,25 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { useInView } from "react-intersection-observer";
-import { useLocation } from "wouter";
-import { useEffect } from "react";
 
 export default function About() {
-  const [, setLocation] = useLocation();
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: false,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      const timeout = setTimeout(() => {
-        setLocation("/products");
-      }, 800);
-      return () => clearTimeout(timeout);
-    }
-  }, [inView, setLocation]);
-
   return (
     <div className="min-h-screen flex flex-col bg-background font-sans">
       <Navigation />
@@ -54,8 +36,6 @@ export default function About() {
               </div>
               
               <div className="order-1 md:order-2">
-                {/* Stock image for office/team vibe */}
-                {/* Modern office team meeting brainstorming */}
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   <div className="absolute inset-0 bg-primary/20 z-10 mix-blend-multiply" />
                   <img 
@@ -90,13 +70,12 @@ export default function About() {
         </section>
 
         {/* Location / T-Hub */}
-        <section ref={ref} className="py-20 px-4 bg-white">
+        <section className="py-20 px-4">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-3xl font-display font-bold mb-8">Incubated at T-Hub</h2>
             <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
               Being part of the world's largest incubation centre gives us access to a vibrant ecosystem of mentors, investors, and fellow innovators, fueling our growth and vision.
             </p>
-            {/* T-Hub Building Architecture */}
             <div className="rounded-3xl overflow-hidden shadow-xl border border-border">
               <img 
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80" 
@@ -104,7 +83,6 @@ export default function About() {
                 className="w-full h-64 md:h-96 object-cover"
               />
             </div>
-            <p className="text-primary font-medium animate-bounce mt-12">Scroll more to see our products</p>
           </div>
         </section>
       </main>
